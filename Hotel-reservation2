@@ -1,0 +1,63 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        HotelReservationSystem hotelSystem = new HotelReservationSystem();
+
+        // Adding rooms
+        hotelSystem.addRoom(new Room(101, "Standard", true));
+        hotelSystem.addRoom(new Room(102, "Standard", true));
+        hotelSystem.addRoom(new Room(103, "Deluxe", true));
+        hotelSystem.addRoom(new Room(104, "Deluxe", true));
+
+        // Example usage
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to Hotel Reservation System");
+
+        // Search available rooms
+        System.out.print("Enter room category (Standard/Deluxe): ");
+        String category = scanner.nextLine();
+        List<Room> availableRooms = hotelSystem.searchAvailableRooms(category);
+        System.out.println("Available " + category + " rooms:");
+        for (Room room : availableRooms) {
+            System.out.println("Room Number: " + room.getRoomNumber());
+        }
+
+        // Make reservation
+        System.out.print("Enter room number to reserve: ");
+        int roomNumber = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+        Room selectedRoom = null;
+        for (Room room : availableRooms) {
+            if (room.getRoomNumber() == roomNumber) {
+                selectedRoom = room;
+                break;
+            }
+        }
+        if (selectedRoom != null) {
+            System.out.print("Enter guest name: ");
+            String guestName = scanner.nextLine();
+            System.out.print("Enter check-in date: ");
+            String checkInDate = scanner.nextLine();
+            System.out.print("Enter check-out date: ");
+            String checkOutDate = scanner.nextLine();
+            hotelSystem.makeReservation(guestName, selectedRoom, checkInDate, checkOutDate);
+        } else {
+            System.out.println("Invalid room number selected.");
+        }
+
+        // View booking details
+        System.out.print("Enter reservation ID to view booking details: ");
+        int reservationId = scanner.nextInt();
+        hotelSystem.viewBookingDetails(reservationId);
+
+        // Process payment
+        System.out.print("Enter reservation ID to process payment: ");
+        reservationId = scanner.nextInt();
+        hotelSystem.processPayment(reservationId);
+
+        scanner.close();
+    }
+}
