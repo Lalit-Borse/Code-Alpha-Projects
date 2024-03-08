@@ -1,0 +1,54 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+
+public class StudentGrades {
+    public static void main(String[] args) {
+        // Initialize Scanner for input and ArrayList to store grades
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Integer> grades = new ArrayList<>();
+
+        System.out.println("Enter student grades (type -1 to finish): ");
+
+        // Input loop for grades
+        while (true) {
+            int grade = scanner.nextInt();
+
+            // Check for the sentinel value to break the loop
+            if (grade == -1) {
+                break;
+            }
+
+            // Add grade to the ArrayList if it's between 0 and 100
+            if (grade >= 0 && grade <= 100) {
+                grades.add(grade);
+            } else {
+                System.out.println("Invalid grade. Please enter a value between 0 and 100.");
+            }
+        }
+
+        // Calculate average, max, and min if there are any grades entered
+        if (!grades.isEmpty()) {
+            double average = calculateAverage(grades);
+            int max = Collections.max(grades);
+            int min = Collections.min(grades);
+
+            System.out.println("Average grade: " + average);
+            System.out.println("Highest grade: " + max);
+            System.out.println("Lowest grade: " + min);
+        } else {
+            System.out.println("No grades were entered.");
+        }
+
+        scanner.close();
+    }
+
+    // Method to calculate the average grade
+    private static double calculateAverage(ArrayList<Integer> grades) {
+        int sum = 0;
+        for (int grade : grades) {
+            sum += grade;
+        }
+        return sum / (double) grades.size();
+    }
+}
